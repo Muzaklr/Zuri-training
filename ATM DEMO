@@ -1,0 +1,78 @@
+import random
+database = {}
+
+def init():
+    avail_options = False
+    print(':::::::Welcome to BANK OF AFRICA:::::::')
+    while avail_options == False:
+        init_options = int(input('Select one of the following options to continue:\n 1. Login\n 2. Register\n'))
+        if init_options == 1:
+            avail_options = True
+            login()
+        elif init_options == 2:
+            avail_options = True
+            register()
+        else:
+            print('Wrong input! Please try again')
+
+
+def login():
+    print('----LOGIN TO YOUR ACCOUNT----')
+    acct_number = int(input('Account Number: '))
+    password = int(input('Password: \n'))
+    for account_number, user_details in database.items():
+        if acct_number == account_number and password == user_details[3]:
+            bank_operations(user_details)
+        else:
+            print("Account Number and Password don't match!!\n")
+    login()
+
+
+def register():
+    print('Please fill out the form to complete your registration')
+    first_name = input('First Name: ')
+    last_name = input('Last Name: ')
+    email = input('Email Address: ')
+    password = int(input('Password: '))
+
+    account_number = account_number_generator()
+    database[account_number] = [first_name, last_name, email, password]
+    print('Your Account Has Been Created')
+    print('=================================')
+    print('Your Account Number is: %d' %account_number)
+    print('Make sure you keep it safe')
+    login()
+
+
+def bank_operations(user):
+    print('Welcome %s %s' %(user[0], user[1]))
+    bank_services = int(input('Choose one of the following options to continue:\n 1. Cash Withdrawal\n 2. Cash Deposit\n 3. Transfers\n 4. Logout\n'))
+    if bank_services == 1:
+        withdrawal()
+    elif bank_services == 2:
+        deposit()
+    elif bank_services == 3:
+        transfers()
+    elif bank_services == 4:
+        logout()
+    else:
+        print('Invalid input. Please try again\n')
+        bank_operations(user)
+
+
+def account_number_generator():
+    return random.randrange(1111111111, 9999999999)
+
+def withdrawal():
+    print('Withdrawal fxn')
+
+def deposit():
+    print('deposit fxn')
+
+def transfers():
+    print('transfers fxn')
+
+def logout():
+    login()
+
+init()
